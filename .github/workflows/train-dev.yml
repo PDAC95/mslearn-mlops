@@ -50,11 +50,11 @@ jobs:
         run: |
           JOB_NAME="diabetes-train-dev-${{ github.run_id }}"
           echo "Running Azure ML job: $JOB_NAME"
-          az ml job create \
+          bash .github/scripts/run-aml-job.sh \
             -f src/job.yml \
             --name "$JOB_NAME" \
             --set inputs.training_data.path=azureml:diabetes-dev-folder@latest \
-            --stream | tee training_output.log
+            | tee training_output.log
 
       - name: Extract dev metrics from logs
         id: parse-metrics
